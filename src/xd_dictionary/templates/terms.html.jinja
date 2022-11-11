@@ -1,0 +1,26 @@
+{% extends "base.html.jinja" %}
+{% block terms %}
+{% for term in terms %}
+  <div class="term" id="term-{{ term.of_id }}">
+    <div class="container">
+
+      <dl class="row">
+        <dt class="col-3">Nombre de campo de observación</dt> 
+        <dd class="col-9">{{ term.of_name }}</dd>
+
+        <dt class="col-3">ID Campo de observación</dt> 
+        <dd class="col-9">{{ term.of_id }}</dd>
+
+        <dt class="col-3">Descripción</dt> 
+        <dd class="col-9">{{ term.description }}</dd>
+      </dl>    
+
+      <div class="row pb-3">
+        <div class="col-3 offset-9">
+          <a href="{{ term.url }}">Explorar los datos</a>
+        </div>
+      </div>
+    </div>  
+  </div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "xd-dictionary"
+version = "0.1.0"
+description = "Diccionario de datos para los campos de observación del proyecto XicotliData"
+authors = ["Juan M Barrios <juan.barrios@conabio.gob.mx>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+  { include = "xd_dictionary", from="src" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+Jinja2 = "^3.1.2"
+pandas = "^1.5.1"
+openpyxl = "^3.0.10"
+click = "^8.1.3"
+
+[tool.poetry.group.dev.dependencies]
+jupyterlab = "^3.5.0"
+
+[tool.poetry.scripts]
+xd_dictionary = "xd_dictionary.xd_dictionary:main"
+
+[tool.pyright]
+exclude = [ ".venv" ]
+venvPath = "."
+venv = ".venv"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
