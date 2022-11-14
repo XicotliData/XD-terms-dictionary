@@ -2,7 +2,7 @@
 {% block terms %}
 {% for term in terms %}
   <div class="term" id="term-{{ term.of_id }}">
-    <div class="container">
+    <div class="container shadow p-3 mb-4">
 
       <dl class="row">
         <dt class="col-3">Nombre de campo de observación</dt> 
@@ -12,14 +12,51 @@
         <dd class="col-9">{{ term.of_id }}</dd>
 
         <dt class="col-3">Descripción</dt> 
-        <dd class="col-9">{{ term.description }}</dd>
+        <dd class="col-9">
+        {{ term.description if term.description }}
+        </dd>
       </dl>    
 
-      <div class="row pb-3">
+      <div class="row">
         <div class="col-3 offset-9">
           <a href="{{ term.url }}">Explorar los datos</a>
         </div>
       </div>
+
+      {% if term.of_values %}
+        <div class="row p-3">
+          <div class="accordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelTerm-{{ term.of_id }}">
+                <button class="accordion-button collapsed" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#terms-values-{{ term.of_id }}" 
+                aria-expanded="false" 
+                aria-controls="terms-values-{{ term.of_id }}">
+                  Valores
+                </button>
+              </h2>
+              <div id="terms-values-{{ term.of_id }}" 
+              class="accordion-collapse collapse" 
+              aria-labelledby="terms-values-{{ term.of_id }}">
+                <div class="accordion-body">
+                {% for of_value in term.of_values %}
+                  <dl class="row">
+                    <dt class="col-3">Valor de campo de observación</dt> 
+                    <dd class="col-9">{{ of_value["values"] }}</dd>
+
+                    <div class="col-3 offset-9">
+                      <a href="{{ of_value.url }}">Explorar los datos</a>
+                    </div>
+                  </dl>
+                {% endfor %}
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      {% endif %}
     </div>  
   </div>
 {% endfor %}
