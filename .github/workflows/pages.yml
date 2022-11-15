@@ -1,0 +1,40 @@
+name: Publish XicotliData dictionary
+
+on:
+  workflow-dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrecy: 
+  group: "pages"
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  env:
+    PYTHON_VERSION: 3.10
+    POETRY_VERSION: 1.2.2
+    POETRY_HOME: /opt/poetry
+  
+  build:
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install poetry
+      run: curl -sSL https://install.python-poetry.org | python3 - --version $POETRY_VERSION
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build package and install
+      run: |
+        $POETRY_HOME/bin/poetry build -f wheel -n \
+        && pip install dist/xd_dictionary-0.1.0-py3-none-any.whl
+    - name: Test
+      run: ls 
+
