@@ -20,8 +20,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      PYTHON_VERSION: 3.10
-      POETRY_VERSION: 1.2.2
+      PYTHON_VERSION: "3.10"
+      POETRY_VERSION: "1.2.2"
       POETRY_HOME: /opt/poetry
     steps: 
       - name: Setup Python
