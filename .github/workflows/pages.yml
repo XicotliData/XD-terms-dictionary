@@ -17,6 +17,7 @@ defaults:
     shell: bash
 
 jobs:
+  # Build job
   build:
     runs-on: ubuntu-latest
     env:
@@ -36,6 +37,26 @@ jobs:
         run: |
           $POETRY_HOME/bin/poetry build -f wheel -n \
           && pip install dist/xd_dictionary-0.1.0-py3-none-any.whl
-      - name: Test
-        run: ls && xd_dictionary --help
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v2.1.2
+      - name: Build site 
+        run: | 
+          xd_dictionary -vv --task build data/diccionarioDatosXicotliData.xlsx --build_dir build 
+      - name: Upload artifacts
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./build
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1  
 
